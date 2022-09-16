@@ -2,6 +2,87 @@ https://www.tradeskillmaster.com/group-maker/create - use in combination with wo
 https://www.wowhead.com/items
 Sniper - Sniper scans will continuously refresh the newest page of auctions on the AH.
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+TSM Logical jargon
+
+Dbminbuyout
+Dbminbuyout refers to the minimum buyout on the auction house. It is generally not particularly useful in auctioning operations, but it’s very useful for figuring out the profitability of crafts.
+
+Dbmarket
+Dbmarket represents the market value of an item. It is calculated through a slightly complicated algorithm. You can find the description here. Simply said it’s based on an average over the last 14 days.
+
+Dbhistorical
+Dbhistorical is very similar to dbmarket, except it is based on the average over the last 90 days, which makes it much more stable. This can be great for old world materials for instance, as they will typically fluctuate less than current expansion materials.
+
+Dbregionmarketavg
+Dbregionmarketavg represents the average Dbmarket across your region. It’s particularly useful for markets where you want to compare prices across realms such as BoE flipping and Battle pets.
+
+Dbregionsaleavg
+This is the average sale price for your region. I am not currently using this one in any of my operations, but I did use it in my transmog operation when I was active in that market.
+
+Crafting
+Crafting is one of the most useful value sources in TSM. It represents the crafting cost of a crafted item. It’s calculated by finding the material requirements by scanning your profession. It then multiplies the required materials with the material cost for the materials.
+
+The default string for the material costs can be found under crafting in TSM. For most materials the cost will be dbmarket.
+
+Vendorbuy/vendorsell
+These two sources reference the vendor pruchase and vendor sale value of an item.
+
+Avgbuy/avgsell
+These two source represents your average purchase price and average sale price for the item in question.
+
+Non-pricing related sources
+There are some sources that are not related to the price of the items in question, but other statistics, we’ll go through some of them quickly below.
+
+DBregionsaleRate
+This is the rate at which an item sells. It is the percentage of auctions that are expected to sell presented as a decimal number.
+
+Dbregionsoldperday
+This is the average number of items sold per day for an item. I don’t currently use this in any formulas, but it can be useful.
+
+NumExpires
+This counts the number of times an item has expired. This can be useful in slow moving markets to eventually vendor your item if it does not sell within a certain number of expires.
+
+ItemQuality
+This is the quality of the item in question, which translates to 1 = white, 2 = uncommon, 3 = Rare and 4 = Epic.
+
+ItemLevel
+This will let you refer to an items item level. This can be useful for flipping high level battle pets or for using one operation for BoE flipping of various item levels.
+
+RequiredLevel
+This is the required level of the item in question.
+
+Using them to make formulas
+To use these sources we will use them in a similar manner to variables in programming. You can also think of them as variables in a math setting if you are familiar with that.
+
+A very simple formula would simply be 120%crafting. This one will evaluate to 120% of the crafting cost. This is what I typically use as a minimum price in my crafting markets as it guarantees a 20% profit margin as long as I have my material costs dialed in.
+
+You can also use simple arithmetic. TSM accepts addition, multiplication, subtraction and division. You could for instance make price that was crafting+200g if you want to get 200 gold in profit as a minimum.
+
+Using Dbmarket to moderate the price of a crafted item
+If you have a crafted item you will likely want to get full market value for it. If you only use crafting in your operations you may not get the full value of your craft. Let’s say we want to post at a minimum of 120% crafting or dbmarket, whichever is higher. 
+
+In that case we would simply set the minimum price to max(120%crafting, dbmarket). Max() takes to arguments and returns the largest. This means that this price source will evaluate to dbmarket if this is higher than 120% of your crafting cost, and to 120% crafting cost is this is higher than dbmarket. This will bring your price up if the market value is much higher than crafting ensuring a better price.
+
+A normal auctioning operation for crafted items
+For crafted items I typically only use crafting in my operations. As long as I am making a decent profit relative to my cost I’ll be happy. I use 120% crafting as the minimum price, then I will typically use 200% crafting as the normal price. This only comes into play if the AH is empty and I think double the materials cost is a level that most players will generally be willing to buy.
+
+The maximum price is typically set to 300%crafting.
+
+This ensures a decent profit margin at my minimum price and a decent, but not extraordinary normal price level.
+
+Dbmarket vs. dbregionmarketavg vs. dbhistorical
+For flipping markets or for markets where you want to include the market value these three will be your main price sources. I prefer dbmarket for most fast moving current expansion markets, such as materials, flasks etc.
+
+I use dbregionmarketavg together with dbmarket in my BoE flipping settings to ensure that my deals lower than the region market value.
+
+I use dbhistorical in some old world material markets, I’ve been using it extensively in the ore and bars market as the price here is usually more stable, and this gives you a better idea of the long term value of your materials.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
 
 Useful links
 https://thelazygoldmaker.com/tsm4-guide-part-2-groups
